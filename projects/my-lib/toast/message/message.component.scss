@@ -1,0 +1,71 @@
+.sim-toast-message {
+    font-family: "Monospaced Number",
+    "Chinese Quote",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, .65);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    z-index: 1010;
+    width: 100%;
+    pointer-events: none;
+    padding: 8px;
+    text-align: center;
+    &-content {
+        padding: 10px 16px;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+        background: #fff;
+        display: inline-block;
+        pointer-events: all;
+    }
+    &-success .icon {
+        color: #52c41a;
+    }
+    &-danger .icon {
+        color: #f5222d;
+    }
+    &-warning .icon {
+        color: #faad14;
+    }
+    &-info .icon,
+    &-loading .icon {
+        color: #1890ff;
+    }
+    .icon {
+        margin-right: 8px;
+        font-size: 16px;
+        top: 1px;
+        position: relative;
+    }
+    &.move-up-leave.move-up-leave-active {
+        animation-name: MessageMoveOut;
+        overflow: hidden;
+        animation-duration: .3s;
+    }
+}
+
+@keyframes MessageMoveOut {
+    0% {
+        opacity: 1;
+        max-height: 150px;
+        padding: 8px;
+    }
+    100% {
+        opacity: 0;
+        max-height: 0;
+        padding: 0;
+    }
+}

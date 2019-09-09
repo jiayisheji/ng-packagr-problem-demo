@@ -1,0 +1,10 @@
+// Includes all of the typographic styles.
+@mixin sim-typography($config: null) {
+    @if $config==null {
+        $config: sim-typography-config();
+    }
+
+    @include sim-button-typography($config);
+    @include sim-input-typography($config);
+    @include sim-form-field-typography($config);
+}

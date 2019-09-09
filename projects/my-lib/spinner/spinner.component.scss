@@ -1,0 +1,140 @@
+@mixin spinner-size($dotSize, $petalSzie) {
+    .sim-spinner-dot-wrapper {
+        font-size: $dotSize;
+        width: $dotSize;
+        height: $dotSize;
+        i{
+            width: $petalSzie;
+            height: $petalSzie;
+        }
+    }
+}
+
+.sim-spinner {
+    &-container {}
+    &-nested-loading {
+        position: relative;
+    }
+    &-dot {
+        &-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -10px;
+            i {
+                width: 24px;
+                height: 24px;
+                border-radius: 100%;
+                background-color: #1890ff;
+                transform: scale(.75);
+                display: block;
+                position: absolute;
+                opacity: .3;
+                animation: 1s linear infinite alternate SpinnerMove;
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+                &:nth-child(1) {
+                    left: 0;
+                    top: 0
+                }
+                &:nth-child(2) {
+                    right: 0;
+                    top: 0;
+                    animation-delay: .4s
+                }
+                &:nth-child(3) {
+                    right: 0;
+                    bottom: 0;
+                    animation-delay: .8s
+                }
+                &:nth-child(4) {
+                    left: 0;
+                    bottom: 0;
+                    animation-delay: 1.2s
+                }
+            }
+        }
+        &-spinning {
+            transform: rotate(45deg);
+            animation: 1.2s linear infinite SpinnerRotate;
+        }
+    }
+    &.sim-lg{
+        @include spinner-size(50px, 24px);
+    }
+    &.sim-md {
+        @include spinner-size(36px, 16px);
+    }
+    &.sim-sm {
+        @include spinner-size(22px, 10px);
+    }
+    &-placeholder {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        padding-top: 5px;
+        text-shadow: 0 1px 2px #fff;
+        .sim-spinner-placeholder-wrapper & {
+            display: block;
+        }
+    }
+    &-wrapper {
+        font-size: 14px;
+        line-height: 1.5;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        vertical-align: middle;
+        text-align: center;
+        opacity: 0;
+        position: absolute;
+        transition: transform .3s cubic-bezier(.78, .14, .15, .86);
+        display: none;
+    }
+    &-spinning {
+        opacity: 1;
+        position: static;
+        display: inline-block;
+        .sim-spinner-nested-loading & {
+            position: absolute;
+            height: 100%;
+            max-height: 320px;
+            width: 100%;
+            z-index: 4;
+        }
+    }
+    &-content {
+        position: relative;
+    }
+    &-blur {
+        overflow: hidden;
+        opacity: 0.7;
+        filter: blur(0.5px);
+        transform: translateZ(0);
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: #fff;
+            opacity: 0.3;
+            transition: all .3s;
+            z-index: 10;
+        }
+    }
+}
+
+@keyframes SpinnerMove {
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes SpinnerRotate {
+    to {
+        transform: rotate(405deg)
+    }
+}

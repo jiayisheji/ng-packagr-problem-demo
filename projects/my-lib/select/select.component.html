@@ -1,0 +1,24 @@
+<div cdk-overlay-origin class="sim-select-trigger" aria-hidden="true" (click)="toggle()" #origin="cdkOverlayOrigin" #trigger>
+    <div class="sim-select-value" [ngSwitch]="empty">
+        <span class="sim-select-placeholder" *ngSwitchCase="true">{{placeholder || '\u00A0'}}</span>
+        <span class="sim-select-value-text" *ngSwitchCase="false" [ngSwitch]="!!customTrigger">
+        <span *ngSwitchDefault>{{triggerValue}}</span>
+        <i class="sim-menu-submenu-arrow"></i>
+        <ng-content select="sim-select-trigger" *ngSwitchCase="true"></ng-content>
+        </span>
+    </div>
+
+    <div class="sim-select-arrow-wrapper">
+        <div class="sim-select-arrow"></div>
+    </div>
+</div>
+
+<ng-template cdk-connected-overlay cdkConnectedOverlayLockPosition cdkConnectedOverlayHasBackdrop cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop" [cdkConnectedOverlayScrollStrategy]="_scrollStrategy" [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="panelOpen" [cdkConnectedOverlayPositions]="_positions" [cdkConnectedOverlayMinWidth]="_triggerRect?.width" [cdkConnectedOverlayOffsetY]="_offsetY" (backdropClick)="close()" (attach)="_onAttached()" (detach)="close()">
+    <div #panel class="sim-select-panel" [ngClass]="panelClass" [@transformPanel]="multiple ? 'showing-multiple' : 'showing'" (@transformPanel.done)="_onPanelDone()" [style.transformOrigin]="_transformOrigin" [class.sim-select-panel-done-animating]="_panelDoneAnimating"
+        [style.font-size.px]="_triggerFontSize" (keydown)="_handleKeydown($event)">
+        <div class="sim-select-content" [@fadeInContent]="'showing'" (@fadeInContent.done)="_onFadeInDone()">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</ng-template>

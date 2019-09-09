@@ -1,0 +1,114 @@
+@import '../core/styles/utilities/index.scss';
+
+// 按钮样式风格
+@mixin sim-button-theme($theme) {
+    .sim-button {
+        &:hover {
+            border-color: sim-color($theme, 'primary');
+            color: sim-color($theme, 'primary');
+
+            &:active,
+            &.active {
+                background: #f2f2f2;
+            }
+        }
+
+        @each $type in primary,
+        secondary,
+        success,
+        info,
+        warning,
+        danger {
+            &.sim-#{$type} {
+                color: #fff;
+                background: sim-color($theme, $type);
+                border-color: sim-color($theme, $type);
+
+                &:hover {
+                    color: #fff;
+                    background: lighten(sim-color($theme, $type), 7);
+                    border-color: lighten(sim-color($theme, $type), 7);
+                }
+
+                &:active,
+                &.active {
+                    color: #fff;
+                    background: darken(sim-color($theme, $type), 10);
+                    border-color: darken(sim-color($theme, $type), 10);
+                } 
+            }
+            &-outline,
+            &-dashed {
+                &.sim-#{$type} {
+                    color: sim-color($theme, $type);
+                    background: #fff;
+                    border-color: sim-color($theme, $type);
+                }
+            }
+            &-flat{
+                &.sim-#{$type} {
+                    color: sim-color($theme, $type);
+                    background: none;
+                    border: none;
+                }
+            }
+        } 
+    }
+}
+
+// 按钮布局样式
+@mixin sim-button-typography ($config) {
+    $icon-prefix: map-get($config, 'icon-prefix');
+    .sim-button {
+        font-weight: 400;
+        color: map-get($config, 'normal-color');
+        background-color: map-get($config, 'normal-background');
+        border-color: map-get($config, 'normal-border');
+        border-radius: map-get($config, 'radius-base');
+        .#{$icon-prefix}-loading {
+            transition: margin-left .3s cubic-bezier(.645, .045, .355, 1);
+            &+span {
+                margin-left: .5em;
+            }
+        }
+
+        &-loading {
+            .sim-button-wrapper .#{$icon-prefix} {
+                display: none;
+            }
+        }
+        
+        &[disabled],
+        &[disabled]:hover {
+            background-color: map-get($config, 'disabled-background');
+            color: map-get($config, 'disabled-color');
+            border-color: map-get($config, 'normal-border');
+            text-shadow: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        &-pill,
+        &-circle {
+            border-radius: map-get($config, 'lg-height');
+        }
+
+        @each $size, $base in (lg, 16px),
+        (md, 8px),
+        (sm, 0) {
+            &.sim-#{$size} {
+                padding: 0 map-get($config, '#{$size}-height') / 2 + $base;
+                font-size: map-get($config, '#{$size}-size');
+                height: map-get($config, '#{$size}-height');
+                line-height: map-get($config, '#{$size}-height');
+            }
+
+            &-circle,
+            &-square {
+                padding: 0 !important;
+                &.sim-#{$size} {
+                    width: map-get($config, '#{$size}-height');
+                }
+            }
+        }
+    }
+}

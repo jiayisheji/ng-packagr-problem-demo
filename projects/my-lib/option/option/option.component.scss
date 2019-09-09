@@ -1,0 +1,63 @@
+/* .sim-option {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    line-height: 48px;
+    height: 48px;
+    padding: 0 16px;
+    text-align: left;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    outline: 0;
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+
+    &[disabled], &-disabled {
+        color: rgba(0, 0, 0, .25);
+        cursor: not-allowed;
+    }
+    &[aria-disabled='true'] {
+        user-select: none;
+        cursor: default;
+    }
+    .sim-optgroup &:not(.sim-option-multiple) {
+        padding-left: 32px;
+        [dir='rtl'] & {
+            padding-left: 16px;
+            padding-right: 32px
+        }
+    }
+    .sim-icon {
+        margin-right: 16px;
+        vertical-align: middle;
+        [dir=rtl] & {
+            margin-left: 16px;
+            margin-right: 0;
+        }
+    }
+    &-text {
+        display: inline-block;
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    &-active{
+
+    }
+
+}
+
+@media screen and (-ms-high-contrast:active) {
+    .sim-option {
+        margin: 0 1px
+    }
+    .sim-option.sim-active {
+        border: solid 1px currentColor;
+        margin: 0
+    }
+} */

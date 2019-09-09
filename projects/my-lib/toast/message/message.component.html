@@ -1,0 +1,12 @@
+<div class="sim-toast-message" [@message]="state" (mouseenter)="onEnter()" (mouseleave)="onLeave()">
+    <div class="sim-toast-message-content" [ngClass]="'sim-toast-message-' + data.type">
+        <ng-container [ngSwitch]="data.type">
+            <i *ngSwitchCase="'success'" class="icon icon-check-circle"></i>
+<i *ngSwitchCase="'info'" class="icon icon-info-cirlce"></i>
+            <i *ngSwitchCase="'warning'" class="icon icon-exclamation-circle"></i>
+            <i *ngSwitchCase="'danger'" class="icon icon-cross-circle"></i>
+            <i *ngSwitchCase="'loading'" class="icon icon-spin icon-loading"></i>
+        </ng-container>
+        <span [innerHTML]="data.message"></span>
+    </div>
+</div>

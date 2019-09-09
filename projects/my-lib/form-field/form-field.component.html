@@ -1,0 +1,44 @@
+<div class="sim-form-field-wrapper">
+    <!-- 表单标签区 -->
+    <div class="sim-form-field-label-wrapper" [class.sim-form-field-label-wrapper-required]="labelRequired" [style.width]="labelWidth" *ngIf="_labelChild || label">
+        <ng-container *ngIf="_labelChild && !label">
+            <ng-content select="[simLabel]"></ng-content>
+        </ng-container>
+        <ng-container *ngIf="label && !_labelChild">
+            <label simLabel [attr.for]="labelForId">{{label}}</label>
+        </ng-container>
+    </div>
+    <!-- 表单主体区 -->
+    <div class="sim-form-field-flex-wrapper">
+        <!-- 表单输入区 -->
+        <div class="sim-form-field-flex" #connectionContainer (click)="_control?.onContainerClick && _control?.onContainerClick($event)">
+            <div class="sim-form-field-prefix" *ngIf="_prefixChildren.length">
+                <ng-content select="[simPrefix]"></ng-content>
+            </div>
+            <div class="sim-form-field-infix" #inputContainer>
+                <ng-content></ng-content>
+            </div>
+            <div class="sim-form-field-suffix" *ngIf="_suffixChildren.length">
+                <ng-content select="[simSuffix]"></ng-content>
+            </div>
+        </div>
+        <ng-container *ngIf="_tipsChildren.length">
+            <div class="sim-form-field-tips-wrapper">
+                <ng-content select="sim-tips"></ng-content>
+            </div>
+        </ng-container>
+        <!-- 表单提示信息和错误提示 -->
+        <ng-container *ngIf="_errorChildren.length || _hintChildren.length">
+            <div class="sim-form-field-subscript-wrapper" [ngSwitch]="_getDisplayedMessages()">
+                <div *ngSwitchCase="'error'" [@transitionMessages]="_subscriptAnimationState">
+                    <ng-content select="sim-error"></ng-content>
+                </div>
+                <div class="sim-form-field-hint-wrapper" *ngSwitchCase="'hint'" [@transitionMessages]="_subscriptAnimationState">
+                    <ng-content select="sim-hint:not([align='end'])"></ng-content>
+                    <div class="sim-form-field-hint-spacer"></div>
+                    <ng-content select="sim-hint[align='end']"></ng-content>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

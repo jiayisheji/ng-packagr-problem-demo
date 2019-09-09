@@ -1,0 +1,14 @@
+<ng-template #defaultIndicatorTemplate>
+    <span class="sim-spinner-dot-wrapper" [class.sim-spinner-dot-spinning]="resultSpinning$|async">
+      <i></i><i></i><i></i><i></i>
+    </span>
+</ng-template>
+<div class="sim-spinner-container" [class.sim-spinner-nested-loading]="isNested">
+    <div class="sim-spinner-wrapper" [class.sim-spinner-spinning]="resultSpinning$|async" [class.sim-spinner-placeholder-wrapper]="placeholder">
+        <ng-template [ngTemplateOutlet]="indicator||defaultIndicatorTemplate"></ng-template>
+        <div class="sim-spinner-placeholder" *ngIf="placeholder">{{ placeholder }}</div>
+    </div>
+    <div #containerElement class="sim-spinner-content" [class.sim-spinner-blur]="resultSpinning$|async" [hidden]="!isNested" (cdkObserveContent)="checkNested()">
+        <ng-content></ng-content>
+    </div>
+</div>

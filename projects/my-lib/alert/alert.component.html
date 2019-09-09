@@ -1,0 +1,12 @@
+<ng-content select="sim-alert-tips-icon,[sim-alert-tips-icon],sim-alert-notes-icon,[sim-alert-notes-icon]"></ng-content>
+<ng-content></ng-content>
+<ng-template [ngIf]="dismissible">
+    <button type="button" class="sim-alert-closable" (click)="closeAlert($event)" aria-label="Close">
+      <ng-template [ngIf]="!dismissLabel">
+        <span aria-hidden="true" class="closable">&times;</span>
+      </ng-template>
+      <ng-template [ngIf]="dismissLabel">
+        <span aria-hidden="true">{{dismissLabel}}</span>
+      </ng-template>
+    </button>
+</ng-template>

@@ -1,0 +1,7 @@
+<ng-container *ngIf="!loading">
+    <ng-content></ng-content>
+</ng-container>
+<ng-container *ngIf="loading">
+    <ng-container [ngTemplateOutlet]="skeleton" *ngIf="skeleton"></ng-container>
+    <sim-card-skeleton *ngIf="!skeleton"></sim-card-skeleton>
+</ng-container>

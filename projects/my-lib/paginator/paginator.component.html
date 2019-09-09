@@ -1,0 +1,37 @@
+<div class="sim-paginator-container">
+    <div class="sim-paginator-range-label">
+        总共 {{pageTotal}} 条
+    </div>
+    <ul class="sim-paginator-range-actions">
+        <li class="sim-paginator-navigation-first" *ngIf="showFirstLastButtons" (click)="firstPage()" title="首页" [class.sim-paginator-navigation-disabled]="!hasPreviousPage()">
+            首页
+        </li>
+        <li class="sim-paginator-navigation-previous" (click)="previousPage()" title="上一页" [class.sim-paginator-navigation-disabled]="!hasPreviousPage()">
+            上一页
+        </li>
+        <li [attr.title]="firstIndex" class="sim-paginator-navigation" (click)="firstPage()" [class.sim-paginator-navigation-active]="isFirstIndex">{{firstIndex}}</li>
+        <li class="sim-paginator-navigation sim-paginator-navigation-jump-previous" title="向前5页" (click)="previousFive()" *ngIf="(lastIndex >9)&&(pageIndex-3>firstIndex)"></li>
+        <li [attr.title]="page.index" class="sim-paginator-navigation" *ngFor="let page of pages" (click)="jumpPage(page.index)" [class.sim-paginator-navigation-active]="pageIndex==page.index">{{page.index}}</li>
+        <li class="sim-paginator-navigation sim-paginator-navigation-jump-next" title="向后5页" (click)="nextFive()" *ngIf="(lastIndex > 9)&&(pageIndex+3<lastIndex)"></li>
+        <li [attr.title]="lastIndex" class="sim-paginator-navigation" (click)="lastPage()" *ngIf="(lastIndex>0)&&(lastIndex!==firstIndex)" [class.sim-paginator-navigation-active]="isLastIndex">{{lastIndex}}</li>
+
+        <li class="sim-paginator-navigation-next" (click)="nextPage()" title="下一页" [class.sim-paginator-navigation-disabled]="!hasNextPage()">
+            下一页
+        </li>
+        <li class="sim-paginator-navigation-last" (click)="lastPage()" title="尾页" [class.sim-paginator-navigation-disabled]="!hasNextPage()" *ngIf="showFirstLastButtons">
+            尾页
+        </li>
+    </ul>
+    <div class="sim-paginator-page-size" *ngIf="!hidePageSize">
+        <sim-form-field *ngIf="_displayedPageSizeOptions.length > 1" class="sim-paginator-page-size-select">
+            <sim-select [value]="pageSize" (selectionChange)="_changePageSize($event.value)">
+                <sim-option *ngFor="let pageSizeOption of _displayedPageSizeOptions" [value]="pageSizeOption">
+                    {{pageSizeOption}}条/页
+                </sim-option>
+            </sim-select>
+        </sim-form-field>
+    </div>
+    <div class="sim-paginator-page-jumper" *ngIf="!hideJumperPage">
+        前往<input #quickJumperInput type="number" (keydown.enter)="handleKeyDown($event, quickJumperInput)">页
+    </div>
+</div>

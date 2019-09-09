@@ -1,0 +1,31 @@
+<label [attr.for]="inputId" class="sim-checkbox-label" #label>
+  <div class="sim-checkbox-container"
+       [class.sim-checkbox-inner-container-no-side-margin]="!checkboxLabel.textContent || !checkboxLabel.textContent.trim()">
+{{ checkboxLabel.textContent }}
+    <input #input
+           class="sim-checkbox-input cdk-visually-hidden" type="checkbox"
+           [id]="inputId"
+           [required]="required"
+           [checked]="checked"
+           [attr.value]="value"
+           [disabled]="disabled"
+           [attr.name]="name"
+           [tabIndex]="tabIndex"
+           [indeterminate]="indeterminate"
+           [attr.aria-label]="ariaLabel || null"
+           [attr.aria-labelledby]="ariaLabelledby"
+           [attr.aria-checked]="_getAriaChecked()"
+           (change)="_onInteractionEvent($event)"
+           (click)="_onInputClick($event)">
+    <div class="sim-checkbox-frame"></div>
+    <div class="sim-checkbox-background">
+      <!-- Element for rendering the indeterminate state checkbox. -->
+      <div class="sim-checkbox-mixedmark"></div>
+    </div>
+  </div>
+  <span class="sim-checkbox-label-content" #checkboxLabel (cdkObserveContent)="_onLabelTextChange()">
+    <!-- Add an invisible span so JAWS can read the label -->
+    <span style="display:none">&nbsp;</span>
+    <ng-content></ng-content>
+  </span>
+</label>

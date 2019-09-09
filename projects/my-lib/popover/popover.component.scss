@@ -1,0 +1,104 @@
+.sim-popover {
+    position: relative;
+    display: block;
+
+    .direction-arrow {
+        width: 8px;
+        height: 8px;
+        transform: rotate(45deg);
+        position: absolute;
+        display: block;
+        background: rgb(255, 255, 255);
+        border-color: transparent;
+        border-style: solid;
+    }  
+
+    &.left {
+        margin-right: 10px;
+
+        .direction-arrow {
+            right: -4px;
+            box-shadow: rgba(0, 0, 0, 0.07) 3px -3px 7px;
+        }
+    }
+
+    &.right {
+        margin-left: 10px;
+
+        .direction-arrow {
+            left: -4px;
+            box-shadow: rgba(0, 0, 0, 0.07) -3px 3px 7px;
+        }
+    }
+
+    &.left,
+    &.right {
+        &.center .direction-arrow {
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+    }
+    &.left.left-bottom,
+    &.right.right-bottom {
+        .direction-arrow {
+            bottom: 16px;
+        }
+    }
+
+    &.left.left-top,
+    &.right.right-top {
+        .direction-arrow {
+            top: 16px;
+        }
+    }
+
+    &.bottom {
+        margin-top: 10px;
+
+        .direction-arrow {
+            top: -5px;
+            box-shadow: rgba(0, 0, 0, 0.06) -2px -2px 5px;
+        }
+    }
+
+    &.top {
+        margin-bottom: 10px;
+
+        .direction-arrow {
+            bottom: -5px;
+            box-shadow: rgba(0, 0, 0, 0.07) 3px 3px 7px;
+        }
+    }
+
+    &.bottom,
+    &.top {
+        &.center .direction-arrow {
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+        }
+    }
+
+    &.bottom.bottom-left,
+    &.top.top-left {
+        .direction-arrow {
+            left: 16px;
+        }
+    }
+
+    &.bottom.bottom-right,
+    &.top.top-right {
+        .direction-arrow {
+            right: 16px;
+        }
+    }
+    &-content {
+        background-color: rgb(255, 255, 255);
+        background-clip: padding-box;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+        border-radius: 4px;
+    }
+    &-inner {
+        padding: 12px 16px;
+        position: relative;
+    }
+}

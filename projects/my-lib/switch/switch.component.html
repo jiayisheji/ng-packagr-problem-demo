@@ -1,0 +1,35 @@
+<label class="sim-switch-label" #label>
+  <div #toggleBar class="sim-switch-bar"
+       [class.mat-slide-toggle-bar-no-side-margin]="!labelContent.textContent || !labelContent.textContent.trim()">
+    <input #input class="sim-switch-input cdk-visually-hidden" type="checkbox"
+           [id]="id"
+           [required]="required"
+           [tabIndex]="tabIndex"
+           [checked]="checked"
+           [disabled]="disabled"
+           [attr.name]="name"
+           (change)="_onChangeEvent($event)"
+           (click)="_onInputClick($event)">
+
+    <div class="sim-switch-container">
+      <i *ngIf="loading" type="loading" class="sim-switch-loading-icon"></i>
+      <span class="sim-switch-inner">
+        <span *ngIf="checked">
+          <ng-container *ngIf="isCheckedChildrenString; else checkedChildrenTemplate">{{ checkedChildren }}</ng-container>
+          <ng-template #checkedChildrenTemplate>
+            <ng-template [ngTemplateOutlet]="checkedChildren"></ng-template>
+          </ng-template>
+        </span>
+        <span *ngIf="!checked">
+          <ng-container *ngIf="isUnCheckedChildrenString; else unCheckedChildrenTemplate">{{ uncheckedChildren }}</ng-container>
+          <ng-template #unCheckedChildrenTemplate>
+            <ng-template [ngTemplateOutlet]="uncheckedChildren"></ng-template>
+          </ng-template>
+        </span>
+      </span>
+    </div>
+  </div>
+  <span class="sim-switch-content" #labelContent (cdkObserveContent)="_onLabelTextChange()">
+    <ng-content></ng-content>
+  </span>
+</label>

@@ -1,0 +1,66 @@
+$sim-toast-min-width: 288px !default;
+$sim-toast-max-width: 568px !default;
+$sim-toast-spacing-margin: 24px !default;
+.sim-toast-container {
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: block;
+    margin: $sim-toast-spacing-margin;
+    max-width: $sim-toast-max-width;
+    min-width: $sim-toast-min-width;
+    // Note: it's preferred to use a series of transforms, instead of something like `calc()`, because
+    // IE won't animate transforms that contain a `calc`.
+    transform: translateY(100%) translateY($sim-toast-spacing-margin);
+    /**
+   * Removes margin of snack bars which are center positioned horizontally.  This
+   * is done to align snack bars to the edge of the view vertically to match spec.
+   */
+    &.sim-toast-center {
+        margin: 0;
+        transform: translateY(0);
+    }
+    /**
+   * To allow for animations from a 'top' vertical position to animate in a downward
+   * direction, set the translation to start the snack bar above the target position.
+   */
+    &.sim-toast-top {
+        transform: translateY(-100%) translateY(#{-$sim-toast-spacing-margin});
+        &.sim-toast-center {
+            transform: translateY(-100%);
+        }
+    }
+}
+
+@media screen and (-ms-high-contrast: active) {
+    .sim-toast-container {
+        border: solid 1px;
+    }
+}
+
+/**
+ * The sim-toast-handset class will be applied to the overlay
+ * element causing styling to both it and the snack bar container.
+ */
+
+.sim-toast-handset {
+    width: 100%;
+    .sim-toast-container {
+        margin: 0;
+        max-width: inherit;
+        width: 100%;
+    }
+}
+
+.cdk-visually-hidden{
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    outline: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}

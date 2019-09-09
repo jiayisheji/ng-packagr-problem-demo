@@ -1,0 +1,14 @@
+<div class="sim-toast-confirm" [@contentFade]="state">
+    <div class="sim-toast-confirm-title">
+        <div class="title" [innerHTML]="data.actions.title"></div>
+        <button tabindex="0" class="sim-toast-confirm-close" (click)="cancel()"><span class="icon-close"></span></button>
+    </div>
+    <div class="sim-toast-confirm-message">
+        <i class="icon icon-exclamation-circle-o"></i>
+        <div class="message" [innerHTML]="data.message"></div>
+    </div>
+    <div class="sim-toast-confirm-action">
+        <button sim-button (click)="cancel()" size="sm" *ngIf="data.actions.cancel">{{data.actions.cancel}}</button>
+        <button sim-button color="primary" size="sm" (click)="confirm()" *ngIf="data.actions.confirm">{{data.actions.confirm}}</button>
+    </div>
+</div>

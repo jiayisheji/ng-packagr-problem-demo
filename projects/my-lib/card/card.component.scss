@@ -1,0 +1,75 @@
+.sim-card {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .26), 0 2px 2px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .08);
+    overflow: hidden;
+    border-radius: 4px;
+    background: #fff;
+    transition: box-shadow .3s cubic-bezier(.25, .8, .25, 1);
+    backface-visibility: hidden;
+    &-hover:hover {
+        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .26), 0 8px 10px 1px rgba(0, 0, 0, .12), 0 3px 14px 2px rgba(0, 0, 0, .08)
+    }
+    &-title {
+        display: block;
+        margin: 0;
+        flex-basis: 100%;
+        font-size: 1.5em;
+        line-height: 1.5em;
+    }
+    &-subtitle {
+        display: block;
+        margin: 0;
+        color: rgba(0, 0, 0, .54);
+        font-size: .875em;
+        line-height: 1.5em;
+    }
+    &-header {
+        position: relative;
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        padding: 24px;
+        align-items: center;
+        flex-basis: 100%;
+        &-text {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: rgba(0, 0, 0, .74);
+        }
+        .sim-card-avatar+.sim-card-header-text{
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+    }
+    &-extra{
+        margin-left: auto;
+    }
+    &-content {
+        display: block;
+        width: 100%;
+        padding: 24px;
+        margin-bottom: 16px;
+    }
+    &-footer {
+        display: block;
+        width: 100%;
+    }
+    &-actions {
+        display: block;
+        width: 100%;
+        padding: 0 16px 8px;
+        .sim-button{
+            margin: 0 4px;
+        }
+        &-align-end {
+            display: flex;
+            align-self: flex-end;
+        }
+    }
+    &-images {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+}

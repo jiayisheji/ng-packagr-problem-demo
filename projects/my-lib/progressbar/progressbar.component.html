@@ -1,0 +1,12 @@
+<ng-container *ngIf="state$ | async; let state">
+    <div class="sim-progressbar-container" [class.-active]="state.active" [style.transition]="'opacity ' + speed + 'ms ' + ease">
+        <div class="sim-progressbar-placeholder">
+            <div class="sim-progressbar-inner" [style.transform]="state.transform" [style.backgroundColor]="color" [style.transition]="state.active ? 'all ' + speed + 'ms ' + ease : 'none'">
+                <div *ngIf="meteor" class="sim-progressbar-meteor" [style.boxShadow]="'0 0 10px '+ color + ', 0 0 5px ' + color"></div>
+            </div>
+        </div>
+        <div *ngIf="spinner" class="sim-progressbar-spinner" [class.sim-progressbar-spinner-left]="spinnerPosition == 'left'" [class.sim-progressbar-spinner-right]="spinnerPosition == 'right'">
+            <div class="sim-progressbar-spinner-icon" [style.borderTopColor]="color" [style.borderLeftColor]="color"></div>
+        </div>
+    </div>
+</ng-container>

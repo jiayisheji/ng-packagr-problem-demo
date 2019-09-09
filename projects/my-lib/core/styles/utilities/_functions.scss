@@ -1,0 +1,543 @@
+////
+/// @group Utilities
+/// @author <a href="https://github.com/simeonoff" target="_blank">Simeon Simeonoff</a>
+////
+
+/// Converts pixels to relative values (em).
+/// @access public
+/// @param {number|string} $pixels - The pixel value to be converted.
+/// @param {number|string} $context [$browser-context] - The base context to convert against.
+@function em($pixels, $context: $browser-context) {
+    @if (unitless($pixels)) {
+        $pixels: $pixels * 1px;
+    }
+
+    @if (unitless($context)) {
+        $context: $context * 1px;
+    }
+
+    @return ($pixels / $context) * 1em;
+}
+
+/// Pixels to root relative values (rem).
+/// @access public
+/// @param {number|string} $pixels - The pixel value to be converted.
+/// @param {number|string} $context [$browser-context] - The base context to convert against.
+@function rem($pixels, $context: $browser-context) {
+    @if (unitless($pixels)) {
+        $pixels: $pixels * 1px;
+    }
+
+    @if (unitless($context)) {
+        $context: $context * 1px;
+    }
+
+    @return ($pixels / $context) * 1rem;
+}
+
+/// Generates a color shade from base color and saturation level.
+/// @access private
+/// @group Palettes
+/// @param {Color} $color - The base color to be used to generate a color shade.
+/// @param {number|string} $saturation - The saturation level used to create the color shade.
+@function gen-color($color, $saturation) {
+    @if ($saturation==50) {
+        @return lighten(saturate($color, 10.4), 37.7);
+    }
+
+    @else if ($saturation==100) {
+        @return lighten(desaturate($color, 10.4), 31.8);
+    }
+
+    @else if ($saturation==200) {
+        @return lighten(desaturate($color, 17), 18.7);
+    }
+
+    @else if ($saturation==300) {
+        @return lighten(desaturate($color, 12.9), 9.1);
+    }
+
+    @else if ($saturation==400) {
+        @return lighten(desaturate($color, 6.6), 4.1);
+    }
+
+    @else if ($saturation==600) {
+        @return darken(saturate($color, 12.4), 5.1);
+    }
+
+    @else if ($saturation==700) {
+        @return darken(saturate($color, 24.5), 8.8);
+    }
+
+    @else if ($saturation==800) {
+        @return darken(saturate($color, 23.2), 12.7);
+    }
+
+    @else if ($saturation==900) {
+        @return darken(saturate($color, 16.1), 17);
+    }
+
+    @else if ($saturation=='A100') {
+        @return lighten(saturate($color, 10.4), 16.7);
+    }
+
+    @else if ($saturation=='A200') {
+        @return lighten(saturate($color, 10.4), 7.7);
+    }
+
+    @else if ($saturation=='A400') {
+        @return darken(saturate($color, 10.4), 3.9);
+    }
+
+    @else if ($saturation=='A700') {
+        @return darken(saturate($color, 10.4), 16.6);
+    }
+}
+
+/// Retrieves a color from a color palette.
+/// @access public
+/// @group Palettes
+/// @param {Map} $palette - The source palette map.
+/// @param {string} $color - The target color from the color palette.
+/// @param {number|string} $variant [500] - The target color shade from the color palette.
+/// @returns {Color} White if no palette, color, and variant matches found.
+@function sim-color($palette, $color, $variant: 500) {
+    @if map-exists($palette) and map-key-exists($palette, $color) and map-key-exists($color, $variant) {
+        @return map-get(map-get($palette, $color), $variant);
+    }
+
+    @return #fff;
+}
+
+/// Retrieves a contrast text color for a given color from a color palette.
+/// @access public
+/// @group Palettes
+/// @param {Map} $palette - The source palette map.
+/// @param {string} $color - The target color from the color palette.
+/// @param {number|variant} $variant - The target color shade from the color palette.
+/// @returns {Color} [#fff] - Returns white if now palette, color and/or variant matches found.
+@function sim-contrast-color($palette, $color, $variant: 500) {
+    @if map-exists($palette) and map-key-exists($palette, $color) and map-key-exists($color, $variant) {
+        @return map-get(map-get(map-get($palette, $color), 'contrast'), $variant);
+    }
+
+    @return #fff;
+}
+
+/// Returns a contrast color for a passed color.
+/// @access public
+/// @group Palettes
+/// @param {Color} $color - The color used to return a contrast color for.
+/// @returns {Color} - Returns either white or black depending on the brightness of the input color.
+@function text-contrast($color) {
+    @if type-of($color)==color {
+        $color-brightness: round((red($color) * 299) + (green($color) * 587) + (blue($color) * 114) / 1000);
+        $light-color: round((red(#fff) * 299) + (green(#fff) * 587) + (blue(#fff) * 114) / 1000);
+
+        @if abs($color-brightness) < ($light-color / 2) {
+            @return #fff;
+        }
+
+        @else {
+            @return #000;
+        }
+    }
+
+    @return $color;
+}
+
+/// Test if `$value` is a valid direction.
+/// @access private
+/// @param {*} $value - The value to test.
+/// @return {Bool}
+
+@function is-direction($value) {
+    $is-keyword: index((to top, to top right, to right top, to right, to bottom right, to right bottom, to bottom, to bottom left, to left bottom, to left, to left top, to top left), $value);
+    $is-angle: type-of($value)=='number'and index('deg''grad''turn''rad', unit($value));
+    @return $is-keyword or $is-angle;
+}
+
+/// Test if a component, or list of components
+/// is in the list of known components.
+/// @access private
+/// @param {String|List} $excludes - The components list to check in.
+/// @return {List}
+
+@function is-component($items) {
+    $register: map-keys($components);
+
+    @each $item in $items {
+        @if not(index($register, $item)) {
+            @error unquote('Can\'t exclude "#{$item}" because it is not in the list of known components.');
+        }
+    }
+
+    @return $items;
+}
+
+/// Converts numbers to HEX value strings.
+/// @access private
+/// @param {number} $num - The number to convert.
+/// @param {radix} $radix - The base radix to use for the conversion.
+/// @return {String}
+
+@function to-string($num, $radix: 16) {
+    $chars: '0123456789abcdef';
+    $result: '';
+    $sign: '';
+
+    @if $num < 0 {
+        $sign: '-';
+        $num: abs($num);
+    }
+
+    @if $num>=0 and $num < $radix {
+        @return $sign+str-slice($chars, ($num + 1), ($num + 1));
+    }
+
+    $q: $num;
+
+    @while $q !=0 {
+        $r: $q % $radix;
+        $q: floor($q / $radix);
+        $result: str-slice($chars, ($r + 1), ($r + 1)) + $result;
+    }
+
+    @return $sign+$result;
+}
+
+/// Converts a rgba color to a hexidecimal color.
+/// @access public
+/// @requires {function} to-string
+/// @param {Color} $rgba - The rgba color to convert.
+/// @return {Color}
+
+@function hexrgba($rgba) {
+    @if type-of($rgba)==color {
+        $red: red($rgba);
+        $green: green($rgba);
+        $blue: blue($rgba);
+        $a: alpha($rgba);
+        $r: floor($a * $red + (1 - $a) * 255);
+        $g: floor($a * $green + (1 - $a) * 255);
+        $b: floor($a * $blue + (1 - $a) * 255);
+        @return rgb($r, $g, $b);
+    }
+
+    @return $rgba;
+}
+
+/// Extends a Map object with the properties of another Map object.
+/// @access private
+/// @param {Map} $map1 - The source map to get extended.
+/// @param {Map} $map2 - The map extending the source map.
+/// @returns {Map} - Returns the original map extended with the properties of the second map.
+@function extend($map1, $map2) {
+    $result: ();
+
+    @each $key,
+    $value in $map2 {
+        @if not($value) {
+            $result: map-merge($result, (#{$key}: map-get($map1, $key)));
+        }
+
+        @else {
+            $result: map-merge($result, (#{$key}: $value));
+        }
+    }
+
+    $result: map-merge($map1, $result);
+    @return $result;
+}
+
+/// Generates a Material-like color palette for a single color.
+/// @access private
+/// @group Palettes
+/// @requires {function} gen-color
+/// @param {Color} $color - The base color used to generate the palette.
+/// @returns {Map} - A map consisting of 26 color variations.
+@function generate-palette($color) {
+    @return (100: gen-color($color, 100),
+        200: gen-color($color, 200),
+        300: gen-color($color, 300),
+        400: gen-color($color, 400),
+        500: $color,
+        600: gen-color($color, 600),
+        700: gen-color($color, 700),
+        800: gen-color($color, 800),
+        900: gen-color($color, 900),
+        A100: gen-color($color, 'A100'),
+        A200: gen-color($color, 'A200'),
+        A400: gen-color($color, 'A400'),
+        A700: gen-color($color, 'A700'),
+        contrast: (100: text-contrast(gen-color($color, 100)),
+        200: text-contrast(gen-color($color, 200)),
+        300: text-contrast(gen-color($color, 300)),
+        400: text-contrast(gen-color($color, 400)),
+        500: text-contrast($color),
+        600: text-contrast(gen-color($color, 600)),
+        700: text-contrast(gen-color($color, 700)),
+        800: text-contrast(gen-color($color, 800)),
+        900: text-contrast(gen-color($color, 900)),
+        A100: text-contrast(gen-color($color, 'A100')),
+        A200: text-contrast(gen-color($color, 'A200')),
+        A400: text-contrast(gen-color($color, 'A400')),
+        A700: text-contrast(gen-color($color, 'A700')),
+        ));
+}
+
+/// 生成一个调色板。
+/// @access public
+/// @group Palettes
+/// @requires {function} generate-palette
+/// @param {Color} $primary - 用于生成主调色板的主色。
+/// @param {Color} $secondary - 用于生成次调色板的次色。
+/// @param {Color} $info [#1377d5] - 整个应用程序中使用的信息颜色.
+/// @param {Color} $success [#4eb862] - 整个应用程序中使用的成功颜色.
+/// @param {Color} $warn [#fbb13c] - 整个应用程序中使用的警告色.
+/// @param {Color} $error [#ff134a] - 整个应用程序中使用的错误颜色.
+/// @returns {Map} - 这张地图由74种不同的颜色组成，包括“主要的”、“次要的”、“灰色的”、‘信息’,‘成功’,‘警告’,‘错误’的颜色。
+@function sim-palette($primary,
+$secondary,
+$info: #1377d5,
+$success: #4eb862,
+$warning: #fbb13c,
+$danger: #ff134a) {
+    $primary-palette: generate-palette($primary);
+    $secondary-palette: generate-palette($secondary);
+    $info-palette: generate-palette($info);
+    $success-palette: generate-palette($success);
+    $warning-palette: generate-palette($warning);
+    $danger-palette: generate-palette($danger);
+
+    // @debug 'Primary Colors Palette: #{$primary-palette}';
+    // @debug 'secondary Colors Palette: #{$secondary-palette}';
+    // @debug 'Warn Colors Palette: #{$success-palette}';
+
+    @return (primary: $primary-palette,
+        secondary: $secondary-palette,
+        info: $info-palette,
+        success: $success-palette,
+        warning: $warning-palette,
+        danger: $danger-palette,
+        grays: (100: rgba(0, 0, 0, .04),
+        200: rgba(0, 0, 0, .08),
+        300: rgba(0, 0, 0, .12),
+        400: rgba(0, 0, 0, .26),
+        500: rgba(0, 0, 0, .38),
+        600: rgba(0, 0, 0, .54),
+        700: rgba(0, 0, 0, .62),
+        800: rgba(0, 0, 0, .74),
+        900: rgba(0, 0, 0, .87),
+        contrast: (100: text-contrast(rgba(0, 0, 0, .04)),
+        200: text-contrast(rgba(0, 0, 0, .08)),
+        300: text-contrast(rgba(0, 0, 0, .12)),
+        400: text-contrast(rgba(0, 0, 0, .26)),
+        500: text-contrast(rgba(0, 0, 0, .38)),
+        600: text-contrast(rgba(0, 0, 0, .54)),
+        700: text-contrast(rgba(0, 0, 0, .62)),
+        800: text-contrast(rgba(0, 0, 0, .74)),
+        900: text-contrast(rgba(0, 0, 0, .87)),
+        )));
+}
+
+@function sim-form-palette($background: #f5f5f5, $border: #d9d9d9, $color: #f5f5f5) {
+    @return (background: $background, border: $border, color: $color);
+}
+
+/// Returns a string from the elements of a list.
+/// Works recursively so the elements can be lists themselves.
+/// @param {List} $list [null] - A list of elements to be turned into a string.
+/// @param {String} $glue [''] - A string symbol to join the elements by.
+@function implode($list, $glue: '') {
+    $result: null;
+
+    @for $i from 1 through length($list) {
+        $e: nth($list, $i);
+
+        @if type-of($e)==list {
+            $result: $result#{implode($e, $glue)};
+        }
+
+        @else {
+            $result: if($i !=length($list),
+            $result#{$e}#{$glue},
+            $result#{$e});
+        }
+    }
+
+    @return $result;
+}
+
+/// Returns a CSS property value. It could return either css '--var' or
+/// a plain string value based on theme configuration.
+/// @access public
+/// @param {map} $map - The source theme to be used to read values from.
+/// @param {string} $key - A key from the theme map to assign as value to the property.
+/// @example scss Assign the color property in a rule-set to a value from the default avatar theme.
+///   %igx-avatar-icon {
+///     color: --var($avatar-theme, 'icon-color');
+///   }
+///   // If legacy-support is off, it will produce the following:
+///   // %igx-avatar-icon {
+///   //   color: var(--igx-avatar-icon-color);
+///   // }
+///   // otherwise, it will return the value for key 'icon-color' in the '$avatar-theme': 
+@function --var($map, $key) {
+    $igx-legacy-support: if(global-variable-exists('igx-legacy-support'), $igx-legacy-support, true);
+
+    @if map-has-key($map, $key) {
+        @if $igx-legacy-support==false {
+            @return unquote('var(--#{map-get($map, 'name')}-#{$key})');
+        }
+
+        @else {
+            @return map-get($map, $key);
+        }
+    }
+
+    @else {
+        @error unquote('The map you passed does not contain a key #{$key}');
+    }
+}
+
+/// Splits a string into a list by a given separator.
+/// @param {string} $string - The string to split.
+/// @param {string} $separator - The string separator to split the string by.
+///
+@function str-split($string, $separator) {
+    $split-arr: ();
+    $index: str-index($string, $separator);
+
+    @while $index !=null {
+        $item: str-slice($string, 1, $index - 1);
+        $split-arr: append($split-arr, $item);
+        $string: str-slice($string, $index + 1);
+        $index: str-index($string, $separator);
+    }
+
+    $split-arr: append($split-arr, $string);
+    @return $split-arr;
+}
+
+@function sim-typography-palette( 
+    // 标题文本字体颜色
+    $heading-color : rgba(0, 0, 0, .85),
+    $text-color : rgba(0, 0, 0, .65),
+    $text-color-secondary : rgba(0, 0, 0, .45),
+    $text-color-error: #ff134a,
+    $heading-color-dark : #ffffff,
+    $text-color-dark : rgba(255, 255, 255, .85),
+    $text-color-secondary-dark: rgba(255, 255, 255, .65),
+    // 默认组件背景，边框，文字颜色
+    $normal-background: #ffffff,
+    $normal-border: #d9d9d9,
+    $normal-color: rgba(0, 0, 0, .65),
+    // 禁用组件背景，边框，文字颜色
+    $disabled-background: #f5f5f5,
+    $disabled-color: rgba(0, 0, 0, .25),
+    // 选项高亮，移入颜色
+    $item-active-bg : #e6f7ff,
+    $item-active-color : rgba(0, 0, 0, .65),
+    $item-hover-bg : #fafafa,
+    $item-hover-color : rgba(0, 0, 0, .65),
+    // 链接颜色
+    $link-color: #1890ff,
+) {
+    @return (heading-color: $heading-color,
+        text-color: $text-color,
+        text-color-error: $text-color-error,
+        text-color-secondary: $text-color-secondary,
+        heading-color-dark: $heading-color-dark,
+        text-color-dark: $text-color-dark,
+        text-color-secondary-dark: $text-color-secondary-dark,
+        // 默认组件背景，边框，文字颜色
+        normal-background: $normal-background,
+        normal-border: $normal-border,
+        normal-color: $normal-color,
+        // 禁用组件背景，边框，文字颜色
+        disabled-background: $disabled-background,
+        disabled-color: $disabled-color,
+        // 选项高亮，移入 背景和字体颜色
+        item-active-bg: $item-active-bg,
+        item-active-color: $item-active-color,
+        item-hover-bg: $item-hover-bg,
+        item-hover-color: $item-hover-color,
+        // 链接颜色
+        link-color: $link-color,
+        );
+}
+
+
+@function sim-typography-base($font-family: 'Roboto, "Helvetica Neue", sans-serif',
+$code-family: 'Roboto, "Helvetica Neue", sans-serif',
+$icon-prefix: icon,
+$display-4: mat-typography-level(112px, 112px, 300),
+$display-3: mat-typography-level(56px, 56px, 400),
+$display-2: mat-typography-level(45px, 48px, 400),
+$display-1: mat-typography-level(34px, 40px, 400),
+$headline: mat-typography-level(24px, 32px, 400),
+$title: mat-typography-level(20px, 32px, 500),
+$subheading-2: mat-typography-level(16px, 28px, 400),
+$subheading-1: mat-typography-level(15px, 24px, 400),
+$body-2: mat-typography-level(14px, 24px, 500),
+$body-1: mat-typography-level(14px, 20px, 400),
+// caption
+$caption: mat-typography-level(12px, 20px, 400),
+$button: mat-typography-level(14px, 14px, 500),
+// Line-height must be unit-less fraction of the font-size.
+$input: mat-typography-level(inherit, 1.125, 400)) {
+    @return (display-4: $display-4,
+        display-3: $display-3,
+        display-2: $display-2,
+        display-1: $display-1,
+        headline: $headline,
+        title: $title,
+        subheading-2: $subheading-2,
+        subheading-1: $subheading-1,
+        body-2: $body-2,
+        body-1: $body-1,
+        caption: $caption,
+        button: $button,
+        input: $input,
+        icon-prefix: $icon-prefix);
+}
+
+@function sim-typography-config($base: sim-typography-base(), $palette: sim-typography-palette(), $from: sim-typography-from()) {
+    @return map-merge($base, map-merge($palette, $from));
+}
+
+@function sim-typography-from(
+    // 按钮 输入框 选择器 高度和字体大小
+    $sm-height: 24px,
+    $sm-size: 14px,
+    $md-height: 32px,
+    $md-size: 14px,
+    $lg-height: 40px,
+    $lg-size: 16px,
+    // 默认行高和字体大小
+    $line-height: 1.5,
+    $font-size: 14px,
+    // 圆角
+    $radius-base: 4px,
+    $radius-sm: 2px,
+    // 特殊样式  高度
+    $radio-size: 16px,
+    $checkbox-size: 16px,
+    $switch-size: 22px,
+) {
+    // Add the base font family to the config.
+    @return (md-height: $md-height,
+        md-size: $md-size,
+        sm-height: $sm-height,
+        sm-size: $sm-size,
+        lg-height: $lg-height,
+        lg-size: $lg-size,
+        line-height: $line-height,
+        font-size: $font-size,
+        radio-size: $radio-size,
+        checkbox-size: $checkbox-size,
+        switch-size: $switch-size,
+        radius-base: $radius-base,
+        radius-sm: $radius-sm);
+}

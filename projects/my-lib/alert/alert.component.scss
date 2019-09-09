@@ -1,0 +1,108 @@
+.sim-alert {
+    display: block;
+    position: relative;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    font-family: "Monospaced Number", "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, .65);
+    box-sizing: border-box;
+    padding: 8px 15px;
+    list-style: none;
+    position: relative;
+    border-radius: 4px;
+    &-success {
+        border: 1px solid #b7eb8f;
+        background-color: #f6ffed;
+        .sim-alert-tips-icon,
+        .sim-alert-notes-icon{
+            color: #52c41a;
+        }
+    }
+    &-info {
+        border: 1px solid #91d5ff;
+        background-color: #e6f7ff;
+        .sim-alert-tips-icon,
+        .sim-alert-notes-icon {
+            color: #1890ff;
+        }
+    }
+    &-warning {
+        border: 1px solid #ffe58f;
+        background-color: #fffbe6;
+        .sim-alert-tips-icon,
+        .sim-alert-notes-icon {
+            color: #faad14;
+        }
+    }
+    &-danger {
+        border: 1px solid #ffa39e;
+        background-color: #fff1f0;
+        .sim-alert-tips-icon,
+        .sim-alert-notes-icon {
+            color: #f5222d;
+        }
+    }
+    &-dismissible {
+        padding-right: 35px;
+    }
+    &-notes{
+        padding-left: 64px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        .sim-alert-closable {
+            top: 15px;
+        }
+    }
+    &-tips{
+        padding-left: 37px;
+        .sim-alert-closable {
+            top: 8px;
+        }
+    }
+    &-tips-icon{
+        position: absolute;
+        top: 12.5px;
+        left: 16px;
+    }
+    &-notes-icon {
+        position: absolute;
+        top: 16px;
+        left: 24px;
+        font-size: 24px;
+    }
+    &-closable{
+        position: absolute;
+        top: 0;
+        right: 15px;
+        -webkit-appearance: none;
+        padding: 0;
+        cursor: pointer;
+        background: none;
+        border: 0;
+        font-size: 14px;
+        color: #1890ff;
+        transition: opacity .3s cubic-bezier(.215, .61, .355, 1);
+        &:focus {
+            outline: 0;
+        }
+        &:hover {
+            color: #40a9ff;
+        }
+        .closable {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1;
+            opacity: .2;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            &:hover {
+                text-decoration: none;
+                cursor: pointer;
+                opacity: .5;
+            }
+        }
+    }
+    
+}

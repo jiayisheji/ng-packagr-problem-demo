@@ -1,0 +1,17 @@
+<div #trigger cdkOverlayOrigin #origin="cdkOverlayOrigin" (mouseenter)="onMouseEnterEvent($event)" (mouseleave)="onMouseLeaveEvent($event)" [style.paddingLeft.px]="(menuComponent.mode === 'inline')?(level*menuComponent.inlineIndent):null" class="sim-menu-submenu-title" (click)="clickSubMenuTitle($event)" [class.sim-menu-submenu-open]="open">
+    <ng-content select="sim-menu-title"></ng-content>
+    <i class="sim-menu-submenu-arrow"></i>
+</div>
+<ul class="sim-menu" [@expandAnimation]="expandState" [class.sim-menu-visible]="open" [class.sim-menu-hidden]="!open" *ngIf="(menuComponent.mode==='inline')">
+    <ng-template [ngTemplateOutlet]="subMenuTemplate"></ng-template>
+</ul>
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayPositions]="overlayPositions" [cdkConnectedOverlayOrigin]="origin" [cdkConnectedOverlayWidth]="triggerWidth" (positionChange)="onPositionChange($event)" [cdkConnectedOverlayOpen]="open&&(menuComponent.mode!='inline')">
+    <div class="sim-menu-submenu sim-menu-submenu-panel" [class.ant-menu-submenu-placement-bottomLeft]="subMenuMode=='horizontal'" [class.ant-menu-submenu-placement-rightTop]="(subMenuMode=='vertical')&&(placement=='rightTop')" [class.ant-menu-submenu-placement-leftTop]="(subMenuMode=='vertical')&&(placement=='leftTop')" [@expandAnimation]="expandState">
+        <ul class="sim-menu sim-submenu sim-menu-vertical" (mouseleave)="onMouseLeaveEvent($event)" (mouseenter)="onMouseEnterEvent($event)">
+            <ng-template [ngTemplateOutlet]="subMenuTemplate"></ng-template>
+        </ul>
+    </div>
+</ng-template>
+<ng-template #subMenuTemplate>
+    <ng-content></ng-content>
+</ng-template>

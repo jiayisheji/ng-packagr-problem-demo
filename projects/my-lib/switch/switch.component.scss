@@ -1,0 +1,106 @@
+.sim-switch-label{
+    display: inline-block;
+    max-width: 100%;
+    height: 22px;
+    line-height: 22px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.sim-switch-inner {
+    color: #fff;
+    font-size: 12px;
+    margin-left: 24px;
+    margin-right: 6px;
+    display: block;
+}
+.sim-switch-bar{
+    display: inline-block;
+    margin-right: 8px;
+    margin-left: 0;
+}
+.sim-switch-container{
+    font-size: 14px;
+    font-variant: tabular-nums;
+    color: rgba(0,0,0,.65);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    height: 22px;
+    min-width: 44px;
+    line-height: 20px;
+    vertical-align: middle;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    background-color: rgba(0,0,0,.25);
+    transition: all .36s;
+    user-select: none;
+}
+.sim-switch-container:after, .sim-switch-loading-icon {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 1px;
+    top: 1px;
+    border-radius: 18px;
+    transition: all .36s cubic-bezier(.78,.14,.15,.86);
+}   
+.sim-switch-container:after {
+    content: " ";
+    box-shadow: 0 2px 4px 0 rgba(0,35,11,.2);
+    background-color: #fff;
+}
+
+.sim-switch-loading-icon {
+    z-index: 1;
+    display: none;
+    font-size: 12px;
+}
+
+.sim-switch.sim-switch-loading .sim-switch-loading-icon{
+    display: inline-block;
+    color: rgba(0,0,0,.65);
+}
+
+.sim-switch.sim-switch-checked .sim-switch-container{
+    background-color: #1890ff;
+}
+
+.sim-switch.sim-switch-checked .sim-switch-container:after{
+    left: 100%;
+    transform: translateX(-100%);
+    margin-left: -1px;
+}
+
+.sim-switch.sim-switch-checked .sim-switch-loading-icon {
+    left: 100%;
+    margin-left: -19px;
+}
+
+.sim-switch.sim-switch-checked.sim-switch-loading .sim-switch-loading-icon {
+    color: #1890ff;
+}
+
+.sim-switch.sim-switch-checked .sim-switch-inner{
+    margin-left: 6px;
+    margin-right: 24px;
+}
+
+.sim-switch-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(0,0,0,.65);
+}
+
+.sim-switch-label-before .sim-switch-bar{
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+.sim-switch-disabled, .sim-switch-loading{
+    pointer-events: none;
+    opacity: .4;
+}

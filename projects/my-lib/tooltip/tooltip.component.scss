@@ -1,0 +1,24 @@
+$sim-tooltip-horizontal-padding: 8px;
+$sim-tooltip-max-width: 250px;
+$sim-tooltip-margin: 14px;
+$sim-tooltip-handset-horizontal-padding: 16px;
+$sim-tooltip-handset-margin: 24px;
+.sim-tooltip-panel {
+    pointer-events: none !important;
+}
+
+.sim-tooltip {
+    color: white;
+    background: rgba(97, 97, 97, .9);
+    border-radius: 2px;
+    margin: $sim-tooltip-margin;
+    max-width: $sim-tooltip-max-width;
+    padding-left: $sim-tooltip-horizontal-padding;
+    padding-right: $sim-tooltip-horizontal-padding;
+}
+
+.sim-tooltip-handset {
+    margin: $sim-tooltip-handset-margin;
+    padding-left: $sim-tooltip-handset-horizontal-padding;
+    padding-right: $sim-tooltip-handset-horizontal-padding;
+}

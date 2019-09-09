@@ -1,0 +1,193 @@
+$mat-select-arrow-size: 5px !default;
+$mat-select-arrow-margin: 4px !default;
+$mat-select-panel-max-height: 256px !default;
+$mat-select-item-height: 3em !default;
+$mat-select-placeholder-arrow-space: 2 * ($mat-select-arrow-size + $mat-select-arrow-margin);
+
+.sim-select {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    min-width: 170px;
+    outline: none;
+    cursor: pointer;
+
+    &-trigger {
+        font-family: Monospaced Number, Chinese Quote, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
+        box-sizing: border-box;
+        margin: 0;
+        list-style: none;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.65);
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        transition: all .3s;
+        box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+
+        &:focus,
+        &:hover {
+            border-color: #40a9ff;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        }
+
+        .sim-select.sim-md & {
+            font-size: 14px;
+            padding: 0 12px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .sim-select.sim-lg & {
+            padding: 0 16px;
+            font-size: 16px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .sim-select.sim-sm & {
+            padding: 0 8px;
+            font-size: 14px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .sim-select-disabled & {
+            user-select: none;
+            cursor: default;
+        }
+    }
+
+    &-value {
+        display: table-cell; // max-width: 0;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+.mat-select-arrow-wrapper {
+    display: table-cell;
+    vertical-align: middle; // When used in a box or standard appearance form-field the arrow should be shifted up 50%.
+
+    .mat-form-field-appearance-fill &,
+    .mat-form-field-appearance-standard & {
+        transform: translateY(-50%);
+    }
+
+    // When used in a outline form-field the arrow should be shifted up 25%.
+    .mat-form-field-appearance-outline & {
+        transform: translateY(-25%);
+    }
+}
+
+.mat-select-arrow {
+    width: 0;
+    height: 0;
+    border-left: $mat-select-arrow-size solid transparent;
+    border-right: $mat-select-arrow-size solid transparent;
+    border-top: $mat-select-arrow-size solid;
+    margin: 0 $mat-select-arrow-margin;
+}
+
+.sim-select-panel {
+    min-width: 112px;
+    max-width: 280px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 256px;
+    min-width: 100%;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+    border-radius: 4px;
+
+    .sim-optgroup-label {
+        color: rgba(0, 0, 0, .45);
+        padding: 0 12px;
+        height: 32px;
+        line-height: 32px;
+        font-size: 12px;
+    }
+
+    .sim-option {
+        position: relative;
+        display: block;
+        padding: 5px 12px;
+        line-height: 22px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, .65);
+        white-space: nowrap;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: background .3s ease;
+
+        &:first-child {
+            border-radius: 4px 4px 0 0;
+        }
+
+        &:last-child {
+            border-radius: 0 0 4px 4px;
+        }
+
+        &:hover {
+            background-color: #e6f7ff;
+        }
+
+        &.sim-option-selected,
+        &.sim-option-selected:hover {
+            background-color: #fafafa;
+            font-weight: 600;
+            color: rgba(0, 0, 0, .65);
+        }
+
+        &:focus,
+        &:active {
+            outline: 0;
+        }
+    }
+}
+
+.mat-form-field-type-mat-select {
+    &:not(.mat-form-field-disabled) .mat-form-field-flex {
+        cursor: pointer;
+    }
+
+    .mat-form-field-label {
+        width: calc(100% - #{$mat-select-placeholder-arrow-space});
+    }
+}
+
+.mat-select-placeholder {
+    // Delay the transition until the label has animated about a third of the way through, in
+    // order to prevent the placeholder from overlapping for a split second.
+    transition: color .4s .133s cubic-bezier(.25, .8, .25, 1);
+
+    .mat-form-field-hide-placeholder & {
+        color: transparent; // Remove the transition to prevent the placeholder
+        // from overlapping when the label comes back down.
+        transition: none; // Prevents the '...' from showing on the parent element.
+        display: block;
+    }
+}
+
+.sim-select-content {
+    background: #fff;
+}

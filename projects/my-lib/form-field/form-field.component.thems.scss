@@ -1,0 +1,137 @@
+@import '../core/styles/utilities/index.scss';
+
+// 输入框样式风格
+@mixin sim-input-theme($theme) {
+    $primary: sim-color($theme, 'primary');
+    $danger: sim-color($theme, 'danger');
+    .sim-input {
+
+        &:focus,
+        &:hover {
+            border-color: $primary;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),
+                0 0 8px rgba($primary, .6);
+        }
+
+        @each $type in primary,
+        secondary,
+        success,
+        info,
+        warning,
+        danger {
+            &.sim-#{$type} {
+                background: #fff;
+                border-color: sim-color($theme, $type);
+
+                &:focus {
+                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),
+                        0 0 8px rgba(sim-color($theme, $type), .6);
+                }
+            }
+        }
+        &[readonly]:focus,
+        &.readonly:focus {
+            box-shadow: none;
+        }
+    }
+
+    .sim-form-field-invalid {
+        .sim-input,
+        .sim-input:hover {
+            border-color: $danger;
+        }
+
+        .sim-input:focus {
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),
+                0 0 6px rgba($danger, .6);
+        }
+    }
+}
+
+// 按钮布局样式
+@mixin sim-input-typography ($config) {
+    .sim-input {
+        font-weight: 400;
+        color: map-get($config, 'normal-color');
+        background-color: map-get($config, 'normal-background');
+        border-color: map-get($config, 'normal-border');
+        border-radius: map-get($config, 'radius-base');
+        box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+
+        @each $size,
+        $base in (lg, 16px),
+        (md, 12px),
+        (sm, 8px) {
+            &.sim-#{$size} {
+                padding: 0 $base;
+                font-size: map-get($config, '#{$size}-size');
+                height: map-get($config, '#{$size}-height');
+                line-height: map-get($config, '#{$size}-height');
+                min-height: map-get($config, '#{$size}-height');
+            }
+        }
+
+        &::placeholder {
+            color: map-get($config, 'text-color-secondary');
+        }
+
+        &[disabled],&.disabled,
+        &[disabled]:hover,
+        &.disabled:hover {
+            background-color: map-get($config, 'disabled-background');
+            color: map-get($config, 'disabled-color');
+            border-color: map-get($config, 'normal-border');
+            text-shadow: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        &[readonly],
+        &[readonly]:hover,
+        &.readonly,
+        &.readonly:hover {
+            background-color: map-get($config, 'disabled-background');
+            color: map-get($config, 'disabled-color');
+            border-color: map-get($config, 'normal-border');
+            text-shadow: none;
+            box-shadow: none;
+            cursor: default;
+        }
+    }
+}
+
+// 按钮布局样式
+@mixin sim-form-field-typography ($config) {
+    $danger: map-get($config, 'text-color-error');
+
+    .sim-form-field {
+        &-label-wrapper {
+            &-required {
+                .sim-form-field-label:before {
+                    color: $danger;
+                }
+            }
+        }
+
+        &-label {
+            &-required:before {
+                color: $danger;
+            }
+        }
+    }
+    .sim-hint {
+        color: map-get($config, 'text-color-secondary');
+        line-height: map-get($config, 'line-height');
+        transition: color .15s cubic-bezier(.215, .61, .355, 1);
+    }
+
+    .sim-error {
+        color: $danger;
+    }
+}
+
+

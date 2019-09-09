@@ -1,0 +1,12 @@
+<div class="sim-popover-content"
+  [ngClass]="overlayClass"
+  [@state]="_visibility"
+  (@state.start)="_animationStart()"
+  (@state.done)="_animationDone($event)"
+  (mouseenter)="trigger != 'hover' ? null : onMouseEnter()"
+  (mouseleave)="trigger != 'hover' ? null :onMouseLeave()">
+  <div class="direction-arrow"></div>
+  <div class="sim-popover-inner">
+      <ng-template [ngTemplateOutlet]="message"></ng-template>
+  </div>
+</div>

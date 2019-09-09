@@ -1,0 +1,16 @@
+<div class="sim-toast-notification sim-toast-notification-closable" [@notification]="state">
+    <div *ngIf="isString" class="sim-toast-notification-content" [ngClass]="'sim-toast-notification-' + data.type">
+        <ng-container [ngSwitch]="data.type">
+            <i *ngSwitchCase="'success'" class="icon icon-check-circle-o"></i>
+            <i *ngSwitchCase="'info'" class="icon icon-info-cirlce-o"></i>
+            <i *ngSwitchCase="'warning'" class="icon icon-exclamation-circle-o"></i>
+            <i *ngSwitchCase="'danger'" class="icon icon-close-circle-o"></i>
+        </ng-container>
+        <div class="sim-toast-notification-title" [innerHTML]="data.title"></div>
+        <div class="sim-toast-notification-description" [innerHTML]="data.content"></div>
+    </div>
+    <div class="sim-toast-notification-content" *ngIf="isTemplate">
+        <ng-template [ngTemplateOutlet]="data.content" [ngTemplateOutletContext]="{ $implicit: this }"></ng-template>
+    </div>
+    <a tabindex="0" class="sim-toast-notification-close" (click)="close()"><span class="icon-close"></span></a>
+</div>
